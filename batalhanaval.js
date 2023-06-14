@@ -27,6 +27,7 @@ function createShip() {
   for (i = 0; i<shipSizes.length; i++) {
     let shipSize = shipSizes[i];
     let line, col;
+    isOverlap = true;
 
     while (isOverlap) {
       line = generateRandom(lines);
