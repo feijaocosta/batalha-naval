@@ -26,8 +26,15 @@ function createShip() {
 
   for (i = 0; i<shipSizes.length; i++) {
     let shipSize = shipSizes[i];
-    let line = generateRandom(lines);
-    let col = generateRandom(cols - shipSize);
+    let line, col;
+
+    while (isOverlap) {
+      line = generateRandom(lines);
+      col = generateRandom(cols - shipSize);
+
+      isOverlap = checkOverlap(ships, line, col, shipSize);
+    }
+
     ship = [];
   
     for (j = 0; j < shipSize; j++) {
@@ -39,6 +46,22 @@ function createShip() {
 
   console.log(ships);
   return ships;
+}
+
+function checkOverlap(ships, line, col, shipSize) {
+  for (let i = 0; i < ships.length; i++) {
+    const ship = ships[i];
+
+    for (let j = 0; j < ship.length; j++) {
+      const [shipLine, shipCol] = ship[j];
+
+      if (line === shipLine && col <= shipCol && shipCol < col + shipSize) {
+        return true; // Sobreposição encontrada
+      }
+    }
+  }
+
+  return false; // Sem sobreposição
 }
 
 function cellClick() {
